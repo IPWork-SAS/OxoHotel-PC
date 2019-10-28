@@ -1,6 +1,6 @@
 [database]
     host = "localhost"
-    port = ""
+    port = "3306"
     user = "root"
-    password = "IPwork2019."
-    name = "portal_oxohotel" 
+    password = ""
+    name = "portal_oxohotel"  

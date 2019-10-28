@@ -1,58 +1,72 @@
 <?php
-  include_once 'includes/locacion.php';
+include_once 'includes/locacion.php';
 
-  $eventos = "eventos";
-  
-  $locacion = new Locacion();
-  $locaciones = $locacion->getLocaciones();
+$eventos = "eventos";
 
-  $dataPoints = array();
-  $dataPoints1 = array();
-  //Best practice is to create a separate file for handling connection to database
-  try{
-      // Creating a new connection.
-      // Replace your-hostname, your-db, your-username, your-password according to your database
-      $link = new \PDO(   'mysql:host=localhost;dbname=portal_oxohotel;charset=utf8mb4', //'mysql:host=localhost;dbname=canvasjs_db;charset=utf8mb4',
-                          'root', //'root',
-                          'IPwork2019.', //'',
-                          array(
-                              \PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                              \PDO::ATTR_PERSISTENT => false
-                          )
-                      );
-    
-      $handle = $link->prepare('select count(edad) numPersonas, edad 
+$locacion = new Locacion();
+$locaciones = $locacion->getLocaciones();
+
+$dataPoints = array();
+$dataPoints1 = array();
+$eventosArray = array();
+//Best practice is to create a separate file for handling connection to database
+try {
+  // Creating a new connection.
+  // Replace your-hostname, your-db, your-username, your-password according to your database
+  $link = new \PDO(
+    'mysql:host=localhost;dbname=portal_oxohotel;charset=utf8mb4', //'mysql:host=localhost;dbname=canvasjs_db;charset=utf8mb4',
+    'root', //'root',
+    /* 'IPwork2019.', */
+    '',
+    array(
+      \PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      \PDO::ATTR_PERSISTENT => false
+    )
+  );
+
+  if (isset($_POST['fecha_inicial']) && isset($_POST['fecha_final'])) {
+    $eventosArray = array();
+    $handle = $link->prepare("select * from eventos where fecha_inicio between '" . $_POST["fecha_inicial"] . "' AND '" . $_POST["fecha_final"] . "'");
+    $handle->execute();
+    $resultFilter = $handle->fetchAll(\PDO::FETCH_OBJ);
+
+    foreach ($resultFilter as $row) {
+      array_push($eventosArray, array("nombre" => $row->nombre, "id" => $row->id));
+    }
+  }
+
+  $handle = $link->prepare('select count(edad) numPersonas, edad 
                                   from portal_oxohotel.publicidad_a_2019_campania
                                   group by edad
-                                  order by edad asc'); 
-      $handle->execute(); 
-      $result = $handle->fetchAll(\PDO::FETCH_OBJ);
+                                  order by edad asc');
+  $handle->execute();
+  $result = $handle->fetchAll(\PDO::FETCH_OBJ);
 
-      $handle1 = $link->prepare('select day(fecha_creacion) as dia, count(*) as numPersonas
+  $handle1 = $link->prepare('select day(fecha_creacion) as dia, count(*) as numPersonas
                                   from publicidad_a_2019_campania
-                                  group by date(fecha_creacion)
-                                  order by fecha_creacion asc'); 
-      $handle1->execute(); 
-      $result1 = $handle1->fetchAll(\PDO::FETCH_OBJ);
-      
-      foreach($result as $row){
-          array_push($dataPoints, array("x"=> $row->edad, "y"=> $row->numPersonas));
-      }
+                                  group by fecha_creacion
+                                  order by fecha_creacion asc');
+  $handle1->execute();
+  $result1 = $handle1->fetchAll(\PDO::FETCH_OBJ);
 
-      foreach($result1 as $row){
-        array_push($dataPoints1, array("x"=> $row->dia, "y"=> $row->numPersonas));
-      }
-
-      $link = null;
+  foreach ($result as $row) {
+    array_push($dataPoints, array("x" => $row->edad, "y" => $row->numPersonas));
   }
-  catch(\PDOException $ex){
-      print($ex->getMessage());
-  }  
+
+  foreach ($result1 as $row) {
+    array_push($dataPoints1, array("x" => $row->dia, "y" => $row->numPersonas));
+  }
+
+  $link = null;
+} catch (\PDOException $ex) {
+  print($ex->getMessage());
+}
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -72,69 +86,69 @@
   <link href="css/sb-admin.css" rel="stylesheet">
 
   <script>
-    window.onload = function () {
+    window.onload = function() {
 
-      
-    
-    var chart = new CanvasJS.Chart("chartContainer", {
+
+
+      var chart = new CanvasJS.Chart("chartContainer", {
         animationEnabled: true,
         exportEnabled: true,
         theme: "light1", // "light1", "light2", "dark1", "dark2"
-        title:{
-            text: "Numero de Personas por Edad",
-            fontFamily: "tahoma",
+        title: {
+          text: "Numero de Personas por Edad",
+          fontFamily: "tahoma",
         },
         zoomEnabled: true,
         axisX: {
-            title: "Edad",
-            interval: 1
+          title: "Edad",
+          interval: 1
         },
         axisY: {
-            title: "Numero Personas"            
+          title: "Numero Personas"
         },
         data: [{
-            type: "column", //change type to bar, line, area, pie, etc  
-            dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+          type: "column", //change type to bar, line, area, pie, etc  
+          dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
         }]
-    });
-    chart.render(); 
+      });
+      chart.render();
 
-    CanvasJS.addColorSet("greenShades",
-                [//colorSet Array
+      CanvasJS.addColorSet("greenShades",
+        [ //colorSet Array
 
-                "#2F4F4F",
-                "#008080",
-                "#2E8B57",
-                "#3CB371",
-                "#90EE90"                
-                ]);
+          "#2F4F4F",
+          "#008080",
+          "#2E8B57",
+          "#3CB371",
+          "#90EE90"
+        ]);
 
 
-    var chart1 = new CanvasJS.Chart("chartContainer1", {
+      var chart1 = new CanvasJS.Chart("chartContainer1", {
         animationEnabled: true,
         exportEnabled: true,
         theme: "light1", // "light1", "light2", "dark1", "dark2"
-        title:{
-            text: "Numero de Personas por Fecha",
-            fontFamily: "tahoma",
+        title: {
+          text: "Numero de Personas por Fecha",
+          fontFamily: "tahoma",
         },
         zoomEnabled: true,
         axisX: {
-            title: "Dia",
-            interval: 1
+          title: "Dia",
+          interval: 1
         },
         axisY: {
-            title: "Numero Personas",
-            interval: 1            
+          title: "Numero Personas",
+          interval: 1
         },
         data: [{
-          type: "bar",              
+          type: "bar",
           dataPoints: <?php echo json_encode($dataPoints1, JSON_NUMERIC_CHECK); ?>
         }]
-    });
-    chart1.render();
-}
-</script>
+      });
+      chart1.render();
+    }
+  </script>
 
 </head>
 
@@ -219,27 +233,27 @@
                   </tr>
                 </thead>
                 <tfoot>
-                  <tr>                  
+                  <tr>
                     <th>Nombre</th>
                     <th>Fecha Creacion</th>
                     <th>Descripcion</th>
                     <th>Eventos</th>
                   </tr>
                 </tfoot>
-                <tbody> 
-                  <?php  foreach($locaciones as $row): ?>
-                        <tr>
-                            <td><?=$row['nombre'];?></td>
-                            <td><?=$row['fecha_creacion'];?></td>
-                            <td><?=$row['descripcion'];?></td>
-                            <td><a href="index.php?doc=<?=$eventos."&id=".$row['id'];?>">Ver</a></td>
-                        </tr>
-                  <?php endforeach;?>                 
+                <tbody>
+                  <?php foreach ($locaciones as $row) : ?>
+                    <tr>
+                      <td><?= $row['nombre']; ?></td>
+                      <td><?= $row['fecha_creacion']; ?></td>
+                      <td><?= $row['descripcion']; ?></td>
+                      <td><a href="index.php?doc=<?= $eventos . "&id=" . $row['id']; ?>">Ver</a></td>
+                    </tr>
+                  <?php endforeach; ?>
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="card-footer small text-muted">Ultima actualizacion: <?=$locacion->getFechaUltimaEntrada()?></div>
+          <div class="card-footer small text-muted">Ultima actualizacion: <?= $locacion->getFechaUltimaEntrada() ?></div>
         </div>
 
         <!-- Area Chart Example-->
@@ -248,55 +262,87 @@
             <i class="fas fa-chart-area"></i>
             Eventos
           </div>
-          <div class="card-body">            
-              <div class="card-header">
-                <i class="fas fa-chart-area"></i>
-                Publicidad_A
-              </div>
-              <div class="card-body">               
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="card mb-3">
-                      <div class="card-header">
-                        <i class="fas fa-chart-bar"></i>
-                        Numero de Personas por Edad</div>
-                      <div class="card-body">
-                      <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-                      </div>
-                      <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-                    </div>
+          <div class="card-body">
+          <form action="" method="POST" class="col-lg-12 col-md-12 col-sm-12">
+              <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 form-group">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <label for="fecha_inicial">Fecha Inicial</label>
                   </div>
-                  <div class="col-lg-6">
-                    <div class="card mb-3">
-                      <div class="card-header">
-                        <i class="fas fa-chart-pie"></i>
-                        Numero de Personas por Dia</div>
-                      <div class="card-body">
-                        <div id="chartContainer1" style="height: 390px; width: 100%;"></div>
-                      </div>
-                      <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-                    </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <input type="date" class="form-control" id="fecha_inicial" require name="fecha_inicial" value="<?php echo date('Y-m-d'); ?>">
                   </div>
                 </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 form-group">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <label for="fecha_final">Fecha Final</label>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <input type="date" class="form-control" id="fecha_final" require name="fecha_final" value="<?php echo date('Y-m-d'); ?>">
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 form-group" style="padding-top: 30px;">
+                  <input type="submit" class="btn btn-primary" value="Filtrar">
+                </div>
               </div>
-              </div>               
+            </form>
+            <div class="row">
+              <div class="col-md-12 col-lg-12 col-sm-12 form-group">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label for="evento">Evento</label>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <select name="evento" id="evento" class="form-control" require>
+                    <option value="">Seleccione ...</option>
+                    <?php foreach ($eventosArray as $evento) : ?>
+                      <option value="<?php echo $evento['id']; ?>"><?php echo $evento['nombre']; ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="card mb-3">
+                  <div class="card-header">
+                    <i class="fas fa-chart-bar"></i>
+                    Numero de Personas por Edad</div>
+                  <div class="card-body">
+                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                  </div>
+                  <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="card mb-3">
+                  <div class="card-header">
+                    <i class="fas fa-chart-pie"></i>
+                    Numero de Personas por Dia</div>
+                  <div class="card-body">
+                    <div id="chartContainer1" style="height: 390px; width: 100%;"></div>
+                  </div>
+                  <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
       </div>
-      <!-- /.container-fluid -->
-
-      <!-- Sticky Footer -->
-      <footer class="sticky-footer">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright © IPwork S.A.S. 2019</span>
-          </div>
-        </div>
-      </footer>
-
     </div>
-    <!-- /.content-wrapper -->
+    <!-- /.container-fluid -->
+
+    <!-- Sticky Footer -->
+    <footer class="sticky-footer">
+      <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+          <span>Copyright © IPwork S.A.S. 2019</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+  <!-- /.content-wrapper -->
 
   </div>
   <!-- /#wrapper -->
@@ -342,7 +388,7 @@
 
   <!-- Demo scripts for this page-->
   <script src="js/demo/datatables-demo.js"></script>
-  <script src="js/demo/chart-area-demo.js"></script> 
+  <script src="js/demo/chart-area-demo.js"></script>
   <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 
