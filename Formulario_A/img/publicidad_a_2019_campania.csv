@@ -1,0 +1,2 @@
+edad;email;fecha_creacion;genero;id;id_evento;ip_ap;ip_cliente;mac_ap;mac_cliente;nombre;ssid;telefono
+1;1;"2019-10-24 11:21:30";juan;juan.suzunaga@gmail.com;31;2134567876543;;Test_R;34e12d43a922;10.165.0.16;10.165.0.8;60d02c2d04f0
