@@ -2,9 +2,6 @@
   include_once 'includes/locacion.php';
 
   $eventos = "eventos";
-  
-  $locacion = new Locacion();
-  $locaciones = $locacion->getLocaciones();
 
   $dataPoints = array();
   $dataPoints1 = array();
@@ -179,14 +176,14 @@
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="index.php">
+        <a class="nav-link" >
           <span>Menu</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.php">
+        <a class="nav-link" href="index.php?doc=eventos&id=1">
           <i class="fas fa-fw fa-chart-area"></i>
-          <span>Locaciones</span></a>
+          <span>Eventos</span></a>
       </li>
     </ul>
 
@@ -197,50 +194,9 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">Administrador</a>
+            <a href="index.php">Dashboard</a>
           </li>
-          <li class="breadcrumb-item active">Locaciones</li>
         </ol>
-
-        <!-- DataTables Example -->
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            Lista de locaciones</div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Fecha Creacion</th>
-                    <th>Descripcion</th>
-                    <th>Eventos</th>
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr>                  
-                    <th>Nombre</th>
-                    <th>Fecha Creacion</th>
-                    <th>Descripcion</th>
-                    <th>Eventos</th>
-                  </tr>
-                </tfoot>
-                <tbody> 
-                  <?php  foreach($locaciones as $row): ?>
-                        <tr>
-                            <td><?=$row['nombre'];?></td>
-                            <td><?=$row['fecha_creacion'];?></td>
-                            <td><?=$row['descripcion'];?></td>
-                            <td><a href="index.php?doc=<?=$eventos."&id=".$row['id'];?>">Ver</a></td>
-                        </tr>
-                  <?php endforeach;?>                 
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="card-footer small text-muted">Ultima actualizacion: <?=$locacion->getFechaUltimaEntrada()?></div>
-        </div>
 
         <!-- Area Chart Example-->
         <div class="card mb-3">

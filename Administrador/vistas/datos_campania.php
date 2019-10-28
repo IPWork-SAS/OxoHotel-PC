@@ -77,14 +77,14 @@
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="index.php">
+        <a class="nav-link">
           <span>Menu</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.php">
+        <a class="nav-link" href="index.php?doc=eventos&id=1">
           <i class="fas fa-fw fa-chart-area"></i>
-          <span>Locaciones</span></a>
+          <span>Eventos</span></a>
       </li>
     </ul>
 
@@ -95,7 +95,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">Administracion</a>
+            <a href="index.php">Dashboard</a>
           </li>
           <li class="breadcrumb-item active">Datos de la Campaña</li>
         </ol>
