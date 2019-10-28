@@ -1,11 +1,16 @@
 <?php
     include_once 'includes/datos_campania.php';
+    include_once 'includes/utilities.class.php';
 
     $id_evento = $_GET['id'];
     $nombre_campania = $_GET['nc'];
   
     $campania = new DatosCampania();
     $campanias = $campania->getDatosCampania($nombre_campania, $id_evento);
+    $columnasCampania = $campania->getCamposTabla($nombre_campania);
+
+    $utilities = new Utilities();
+    
 ?>
 
 
@@ -109,47 +114,38 @@
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
+                <thead>                  
                   <tr>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Edad</th>
-                    <th>Telefono</th>                    
-                    <th>Fecha Creacion</th>
-                    <th>SSID</th>
-                    <th>Mac Cliente</th>
-                    <th>IP Cliente</th>
-                    <th>Mac AP</th>
-                    <th>IP AP</th>
+                    <?php 
+                      foreach ($columnasCampania as $columna) {
+                          if($columna != 'id' && $columna != 'id_evento') {
+                            echo '<th>'.$utilities->getCorrectNameFromColumn($columna).'</th>'; 
+                          }
+                      }
+                    ?>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>                  
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Edad</th>
-                    <th>Telefono</th>                    
-                    <th>Fecha Creacion</th>
-                    <th>SSID</th>
-                    <th>Mac Cliente</th>
-                    <th>IP Cliente</th>
-                    <th>Mac AP</th>
-                    <th>IP AP</th>
+                  <?php 
+                      foreach ($columnasCampania as $columna) {
+                        if($columna != 'id' && $columna != 'id_evento') {
+                          echo '<th>'.$utilities->getCorrectNameFromColumn($columna).'</th>'; 
+                        }
+                      }
+                    ?>
                   </tr>
                 </tfoot>
                 <tbody> 
                   <?php  foreach($campanias as $row): ?>
                         <tr>
-                            <td><?=$row['nombre'];?></td>
-                            <td><?=$row['email'];?></td>
-                            <td><?=$row['edad'];?></td>
-                            <td><?=$row['telefono'];?></td>                            
-                            <td><?=$row['fecha_creacion'];?></td>   
-                            <td><?=$row['ssid'];?></td>
-                            <td><?=$row['mac_cliente'];?></td>
-                            <td><?=$row['ip_cliente'];?></td> 
-                            <td><?=$row['mac_ap'];?></td>
-                            <td><?=$row['ip_ap'];?></td>                           
+                          <?php 
+                            foreach ($columnasCampania as $columna) {
+                              if($columna != 'id' && $columna != 'id_evento') {
+                                echo '<td>'.$row[$columna].'</td>';
+                              }
+                            }
+                          ?>
                         </tr>
                   <?php endforeach;?>                 
                 </tbody>
