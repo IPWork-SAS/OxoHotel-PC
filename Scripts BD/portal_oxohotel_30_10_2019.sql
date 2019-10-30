@@ -62,7 +62,7 @@ CREATE TABLE `eventos` (
   PRIMARY KEY (`id`),
   KEY `id_locacion` (`id_locacion`),
   CONSTRAINT `id_locacion` FOREIGN KEY (`id_locacion`) REFERENCES `locaciones` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `locaciones` (
   PRIMARY KEY (`id`),
   KEY `id_idx` (`id_ciudad`),
   CONSTRAINT `id` FOREIGN KEY (`id_ciudad`) REFERENCES `ciudades` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +120,7 @@ CREATE TABLE `paises` (
   `iso3` varchar(45) DEFAULT NULL,
   `indicativo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,7 +164,7 @@ CREATE TABLE `publicidad_a_2019_campania` (
 
 LOCK TABLES `publicidad_a_2019_campania` WRITE;
 /*!40000 ALTER TABLE `publicidad_a_2019_campania` DISABLE KEYS */;
-INSERT INTO `publicidad_a_2019_campania` VALUES (1,1,'2019-10-24 11:37:31','Juan David pachon Suzunaga','juan.suzunaga@gmail.com','32','3223650805','','Test_R','34e12d43a922','10.165.0.16','10.165.0.8',NULL),(2,1,'2019-10-24 11:56:10','Juan david','juan.suzunaga@email.com','21','3223650805','','oxohotel_1','30074d8595f0','192.168.0.12','192.168.0.23','60d02c2d04f0'),(3,1,'2019-10-24 11:56:57','Soporte','soport@soporte.com','66','2131472580','','oxohotel_1','d0c5f3c5da5a','192.168.0.14','192.168.0.23','60d02c2d04f0'),(4,1,'2019-10-24 11:57:59','Hola','hoq@gsjd.xon','77','2312536325','','oxohotel_1','d0c5f3c5da5a','192.168.0.14','192.168.0.23','60d02c2d04f0'),(5,1,'2019-10-24 12:00:32','Juan','juan.suzunaga@gmail.com','23','2345678654321','','oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(6,1,'2019-10-24 12:31:33','Hola','ge@gsjd.com','66','3214569807','','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0'),(7,1,'2019-10-24 02:47:20','Gerardo Mendoza','ger@correo.com.co','34','1231234565','','oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(8,1,'2019-10-24 02:48:16','Gerardp Mendoza','ger@correo.com','32','32222121212','','oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(9,1,'2019-10-24 02:49:16','Gerardo Mendoza','ger@correo.com','35','3445633432','','oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(10,1,'2019-10-24 05:11:39','sdjflsd sdjfsdkjf','sdsds@gmail.com','34','3156726860','','','','','',''),(11,1,'2019-10-28 09:24:21','Juan David','juan.suzunaga@gmail.com','30','3223650805','','oxohotel_1','34e12d43a922','192.168.0.11','192.168.0.13','60d02c2d04f0'),(12,1,'2019-10-28 04:25:30','Juan','juan.suzunaga@gmail.com','23','1234567654321','Mujer','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0');
+INSERT INTO `publicidad_a_2019_campania` VALUES (1,1,'2019-10-24 11:37:31','Juan David pachon Suzunaga','juan.suzunaga@gmail.com','32','3223650805','Mujer','Test_R','34e12d43a922','10.165.0.16','10.165.0.8',NULL),(2,1,'2019-10-25 11:56:10','Juan david','juan.suzunaga@email.com','21','3223650805','Hombre','oxohotel_1','30074d8595f0','192.168.0.12','192.168.0.23','60d02c2d04f0'),(3,1,'2019-10-50 11:56:57','Soporte','soport@soporte.com','66','2131472580','Hombre','oxohotel_1','d0c5f3c5da5a','192.168.0.14','192.168.0.23','60d02c2d04f0'),(4,1,'2019-10-24 11:57:59','Hola','hoq@gsjd.xon','77','2312536325','Hombre','oxohotel_1','d0c5f3c5da5a','192.168.0.14','192.168.0.23','60d02c2d04f0'),(5,1,'2019-10-25 12:00:32','Juan','juan.suzunaga@gmail.com','23','2345678654321','Hombre','oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(6,1,'2019-10-24 12:31:33','Hola','ge@gsjd.com','66','3214569807','Mujer','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0'),(7,1,'2019-10-30 02:47:20','Gerardo Mendoza','ger@correo.com.co','34','1231234565','Hombre','oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(8,1,'2019-10-24 02:48:16','Gerardp Mendoza','ger@correo.com','32','32222121212','Hombre','oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(9,1,'2019-10-31 02:49:16','Gerardo Mendoza','ger@correo.com','35','3445633432','Hombre','oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(10,1,'2019-10-24 05:11:39','sdjflsd sdjfsdkjf','sdsds@gmail.com','34','3156726860','Otro','','','','',''),(11,1,'2019-10-28 09:24:21','Juan David','juan.suzunaga@gmail.com','30','3223650805','Hombre','oxohotel_1','34e12d43a922','192.168.0.11','192.168.0.13','60d02c2d04f0'),(12,1,'2019-10-28 04:25:30','Juan','juan.suzunaga@gmail.com','23','1234567654321','Mujer','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0');
 /*!40000 ALTER TABLE `publicidad_a_2019_campania` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -194,7 +194,7 @@ CREATE TABLE `publicidad_b_2019_campania` (
 
 LOCK TABLES `publicidad_b_2019_campania` WRITE;
 /*!40000 ALTER TABLE `publicidad_b_2019_campania` DISABLE KEYS */;
-INSERT INTO `publicidad_b_2019_campania` VALUES (1,1,'2019-10-24 10:19:09','Test_R','34e12d43a922','10.165.0.16','10.165.0.8',NULL),(2,1,'2019-10-24 10:25:44','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0'),(3,1,'2019-10-24 11:36:21','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0'),(4,1,'2019-10-24 11:39:59','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0'),(5,1,'2019-10-24 11:58:36','oxohotel_2','30074d8595f0','192.168.0.12','192.168.0.23','60d02c2d04f0'),(6,1,'2019-10-24 11:59:29','oxohotel_2','d0c5f3c5da5a','192.168.0.14','192.168.0.23','60d02c2d04f0'),(7,1,'2019-10-24 12:01:43','oxohotel_2','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(8,1,'2019-10-24 12:04:28','oxohotel_2','30074d8595f0','192.168.0.12','192.168.0.23','60d02c2d04f0'),(9,1,'2019-10-24 12:05:33','oxohotel_2','30074d8595f0','192.168.0.12','192.168.0.23','60d02c2d04f0'),(10,1,'2019-10-24 12:07:28','oxohotel_2','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(11,1,'2019-10-24 12:11:04','oxohotel_2','30074d8595f0','192.168.0.12','192.168.0.23','60d02c2d04f0'),(12,1,'2019-10-24 12:12:35','oxohotel_2','d0c5f3c5da5a','192.168.0.14','192.168.0.23','60d02c2d04f0'),(13,1,'2019-10-24 02:51:40','oxohotel_2','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0');
+INSERT INTO `publicidad_b_2019_campania` VALUES (1,1,'2019-10-24 10:19:09','Test_R','34e12d43a922','10.165.0.16','10.165.0.8',NULL),(2,1,'2019-10-25 10:25:44','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0'),(3,1,'2019-10-30 11:36:21','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0'),(4,1,'2019-10-25 11:39:59','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0'),(5,1,'2019-10-24 11:58:36','oxohotel_2','30074d8595f0','192.168.0.12','192.168.0.23','60d02c2d04f0'),(6,1,'2019-10-28 11:59:29','oxohotel_2','d0c5f3c5da5a','192.168.0.14','192.168.0.23','60d02c2d04f0'),(7,1,'2019-10-24 12:01:43','oxohotel_2','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(8,1,'2019-10-31 12:04:28','oxohotel_2','30074d8595f0','192.168.0.12','192.168.0.23','60d02c2d04f0'),(9,1,'2019-10-24 12:05:33','oxohotel_2','30074d8595f0','192.168.0.12','192.168.0.23','60d02c2d04f0'),(10,1,'2019-10-25 12:07:28','oxohotel_2','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(11,1,'2019-10-24 12:11:04','oxohotel_2','30074d8595f0','192.168.0.12','192.168.0.23','60d02c2d04f0'),(12,1,'2019-10-31 12:12:35','oxohotel_2','d0c5f3c5da5a','192.168.0.14','192.168.0.23','60d02c2d04f0'),(13,1,'2019-10-24 02:51:40','oxohotel_2','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0');
 /*!40000 ALTER TABLE `publicidad_b_2019_campania` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,7 +211,7 @@ CREATE TABLE `roles_usuarios` (
   `descripcion` varchar(1000) DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -242,7 +242,7 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`id`),
   KEY `id_rol` (`id_rol`),
   CONSTRAINT `id_rol` FOREIGN KEY (`id_rol`) REFERENCES `roles_usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

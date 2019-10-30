@@ -27,11 +27,11 @@
         $tabla = $tabla[0]->campania;
 
         /* Consulta de las personas por género */
-        $handle = $link->prepare('SELECT nombre, COUNT(*) AS personas FROM '.$tabla.' GROUP BY nombre');
+        $handle = $link->prepare('SELECT genero, COUNT(*) AS personas FROM '.$tabla.' GROUP BY genero');
         $handle->execute();
         $genero = $handle->fetchAll(\PDO::FETCH_OBJ);
         foreach ($genero as $row) {
-            array_push($eventos[0], array("x" => $row->nombre, "personas" => $row->personas));
+            array_push($eventos[0], array("genero" => $row->genero, "personas" => $row->personas));
         } 
         /* Consulta de las personas por ap */
         $handle = $link->prepare('SELECT ip_ap, COUNT(*) AS personas FROM '.$tabla.' WHERE date(fecha_creacion) BETWEEN	"2019-10-23" AND "2019-10-31" GROUP BY ip_ap');
@@ -72,7 +72,6 @@
         foreach ($fecha as $row) {
             array_push($eventos[5], array("fecha" => $row->fecha, "personas" => $row->personas));
         }
-
 
         echo json_encode($eventos);
     }
