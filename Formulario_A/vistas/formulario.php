@@ -42,13 +42,23 @@
                         <input  oninvalid="this.setCustomValidity('Ingrese un número de telefono celular valido.')"  oninput="this.setCustomValidity('')" type="tel" placeholder="Celular" autocomplete="off" id="telefono" name="telefono" minlength="10" maxlength="40" required>                        
                     </div>
 
+                    <div class="field-sexo">
+                        <i class="fas fa-venus-mars"></i>
+                        <select class="select-control-sexo" id="genero" name="genero" required>
+                            <option value="">Seleccione el genero</option>
+                            <option value="Hombre">Masculino</option>
+                            <option value="Mujer">Femenino</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+
                     <div class="input-group-check">
                         <input type="checkbox" class="input-control-check" required>
                         <a href="#popup">Terminos y condiciones.</a>
                     </div>
 
                     <div class="field-btn-conectar">
-                        <button class="btn-conectar" type="submit">Conéctate</button>
+                        <button class="btn-conectar" type="submit">Siguiente</button>
                     </div>
                 </form>                     
             </div>                 

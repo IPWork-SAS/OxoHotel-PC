@@ -25,16 +25,15 @@
             return $nombre_base_datos;          
         }
 
-        public function getCamposTabla($nombre_tabla, $nombre_base_datos) {
+        public function getCamposTabla($nombre_tabla) {
             $sql = "SELECT COLUMN_NAME
             FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA = '".$nombre_base_datos."' AND TABLE_NAME = '".$nombre_tabla."';";
+            WHERE TABLE_SCHEMA = '".$this->db."' AND TABLE_NAME = '".$nombre_tabla."';";
             $query = $this->connect()->query($sql)->fetchAll();  
 
             $max = sizeof($query);
             $array = array();
-            for ($i=0; $i < $max; $i++) { 
-                
+            for ($i=0; $i < $max; $i++) {                 
                 $array[] = $query[$i][0];
             }
                   

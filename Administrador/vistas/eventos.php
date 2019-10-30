@@ -1,12 +1,12 @@
 <?php
   include_once 'includes/evento.php';
 
-  $id_evento = $_GET['id'];
+  $id_locacion = $_GET['id'];
 
   $datos_campania = "datos_campania";
   
   $evento = new Evento();
-  $eventos = $evento->getEventos($id_evento);
+  $eventos = $evento->getEventos($id_locacion);
 
 ?>
 
@@ -74,14 +74,14 @@
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="index.php">
+        <a class="nav-link" href="">
           <span>Menu</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.php">
+        <a class="nav-link" href="index.php?doc=eventos&id=1">
           <i class="fas fa-fw fa-chart-area"></i>
-          <span>Locaciones</span></a>
+          <span>Eventos</span></a>
       </li>
     </ul>
 
@@ -92,7 +92,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">Administrador</a>
+            <a href="index.php">Dashboard</a>
           </li>
           <li class="breadcrumb-item active">Eventos</li>
         </ol>

@@ -117,21 +117,27 @@ body {
     flex: 1;
     height: 100%;
     outline: none;
-    font-size: 13px;
+    font-size: 20px;
 }
 
 .field-sexo select {
-    font-weight: 500;
+    font-weight: 700;
     font-size: 17px;
 }
 
-.field-sexo select:focus {
+.field-name input:focus-within,
+.field-email input:focus-within,
+.field-telefono input:focus-within,
+.field-edad input:focus-within {
+    color: black;
+    font-size: 30px;
+}
 
+.field-sexo select:focus {
     font-size: 17px;
 }
 
 .field-sexo select::selection {
-
     font-size: 17px;
 }
 
@@ -169,6 +175,8 @@ body {
 }
 
 
+
+
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
@@ -195,22 +203,6 @@ input[type=number]::-webkit-outer-spin-button {
     font-weight: 700;
     font-size: 17px;
   }
-
-
-
-
-@keyframes shake {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    50% {
-        transform: translate(-50%, -50%) rotate(10deg);
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-}
-
 
 
 @media (min-width: 1024px) and (max-width: 1026px) {
@@ -368,7 +360,15 @@ input[type=number]::-webkit-outer-spin-button {
       :-moz-placeholder { /* Firefox 18- */
 
         font-size: 20px;
-      }   
+      }  
+      
+        .field-name input:focus-within,
+        .field-email input:focus-within,
+        .field-telefono input:focus-within,
+        .field-edad input:focus-within {
+            color: black;
+            font-size: 20px;
+        }
 }
 
 
@@ -385,8 +385,24 @@ input[type=number]::-webkit-outer-spin-button {
     .field-email input,
     .field-name input, 
     .field-telefono input {
-        font-size: 20px;    
-    }    
+        font-size: 14px;    
+    }   
+    
+    .field-name,
+    .field-email,
+    .field-telefono,
+    .field-edad,
+    .field-sexo {
+        height: 35px;
+    } 
+    
+    .field-name input:focus-within,
+        .field-email input:focus-within,
+        .field-telefono input:focus-within,
+        .field-edad input:focus-within {
+            color: black;
+            font-size: 17px;
+        }
 }
 
 @media (min-width: 320px) and (max-width: 359px) {
@@ -402,8 +418,24 @@ input[type=number]::-webkit-outer-spin-button {
     .field-email input,
     .field-name input, 
     .field-telefono input {
-        font-size: 19px;    
-    }   
+        font-size: 15px;    
+    } 
+
+    .field-name,
+    .field-email,
+    .field-telefono,
+    .field-edad,
+    .field-sexo {
+        height: 35px;
+    }  
+    
+    .field-name input:focus-within,
+        .field-email input:focus-within,
+        .field-telefono input:focus-within,
+        .field-edad input:focus-within {
+            color: black;
+            font-size: 17px;
+        }
 }
 
 
