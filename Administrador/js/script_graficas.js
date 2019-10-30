@@ -24,7 +24,39 @@ function ConsultaGraficas(id){
 }
 
 function Personas_Genero(Data){
-
+    var personas_genero = $("#personas_genero");
+    var Generos = [];
+    var Datos = [];
+    var BackgroundColor = [];
+    for(i = 0; i < Data.length; i++){
+        Datos[i] = [];
+        BackgroundColor[i] = [];
+        Generos[i] = Data[i]['genero'];
+        var color = Math.floor((Math.random() * 255))+","+Math.floor((Math.random() * 255))+","+Math.floor((Math.random() * 255));
+        Datos[i] = Data[i]['personas'];
+        BackgroundColor[i] = "rgba("+color+", 1)";
+    }
+    var Personas_Genero = new Chart(personas_genero, {
+        type: "pie", 
+        data: {
+            labels: Generos, 
+            datasets: [{
+                data: Datos,
+                backgroundColor: BackgroundColor,
+                borderColor: BackgroundColor,
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: true,
+                labels: {
+                    fontSize: 10
+                }
+            }
+        }
+    });
 } 
 
 function Personas_Ap(Data){
@@ -109,11 +141,47 @@ function Personas_Edad(Data){
 }
 
 function Personas_OS(Data){
-
+    var personas_os = $("#personas_os");
+    var Os = [];
+    var Datos = [];
+    for(i = 0; i < Data.length; i++){
+        Os[i] = Data[i]['os'];
+        Datos[i] = [];
+        var color = Math.floor((Math.random() * 255))+","+Math.floor((Math.random() * 255))+","+Math.floor((Math.random() * 255));
+        Datos[i] = {
+            "label": Os[i],
+            "data": [Data[i]['personas']],
+            "backgroundColor": ["rgba("+color+", 1)"],
+            "borderColor": ["rgba("+color+", 1)"],
+            "borderWidth": 1,
+        }
+    }
+    var Personas_Os = new Chart(personas_os, {
+        type: "bar", 
+        data: {
+            labels: ["Sistemas Operativos"], 
+            datasets: Datos
+        },
+        options: {
+            responsive: true,
+            scales: { 
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            legend: {
+                display: true,
+                labels: {
+                    fontSize: 10
+                }
+            }
+        }
+    });
 }
 
 function Personas_Fecha(Data){
-    // console.log(Data[0]['fecha']);
     var personas_Fechas = $("#personas_fecha");
     var Fechas = [];
     var Datos = [];
@@ -131,7 +199,6 @@ function Personas_Fecha(Data){
         data: {
             labels: Fechas, 
             datasets: [{
-                label: 'Fechas',
                 data: Datos,
                 backgroundColor: colorRgba,
                 borderColor: colorRgba[0],
@@ -150,7 +217,7 @@ function Personas_Fecha(Data){
                 }]
             },
             legend: {
-                display: true,
+                display: false,
                 labels: {
                     fontSize: 10
                 }
