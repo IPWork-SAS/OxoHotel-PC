@@ -27,7 +27,8 @@
 
                     <div class="field-name">
                         <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Nombre y Apellido" autocomplete="off" id="nombre" name="nombre" required onkeyup="validate();">                        
+                        <input type="text" placeholder="Nombre y Apellido" autocomplete="off" id="nombre" name="nombre" required onkeyup="validate();">         
+                        <input type="hidden" name="os" id="os">               
                     </div>
                     <div class="field-email">
                         <i class="fas fa-envelope"></i>
@@ -72,6 +73,17 @@
             </div>
         </div> 
         <script src="../js/formulario.js"></script>    
-        <script src="../js/terminos_condiciones.js"></script>          
+        <script src="../js/terminos_condiciones.js"></script>     
+        <script>
+            $(document).ready(function(){
+                var OSName="Otro";
+                if (navigator.appVersion.indexOf("Win")!=-1){ OSName="Windows" }
+                if (navigator.appVersion.indexOf("Mac")!=-1){ OSName="MacOS" }
+                if (navigator.appVersion.indexOf("X11")!=-1){ OSName="UNIX" }
+                if (navigator.appVersion.indexOf("Linux")!=-1){ OSName="Linux" }
+                if (navigator.appVersion.indexOf("Android")!=-1){ OSName="Android" }
+                $("#os").val(OSName);
+            });
+        </script>     
     </body>
 </html>

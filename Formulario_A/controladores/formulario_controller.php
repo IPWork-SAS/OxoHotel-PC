@@ -16,6 +16,7 @@
 	$edad = isset($_REQUEST['edad']) ? trim($_REQUEST['edad']) : "";
 	$telefono = isset($_REQUEST['telefono']) ? trim($_REQUEST['telefono']) : "";
     $genero = isset($_REQUEST['genero']) ? trim($_REQUEST['genero']) : "";
+    $os = isset($_REQUEST['os']) ? trim($_REQUEST['os']) : "";
     
     $campania = new Campania;
     $campania->nombre = $nombre;
@@ -25,6 +26,7 @@
     $campania->edad = $edad;
     $campania->telefono = $telefono;
     $campania->genero = $genero;
+    $campania->os = $os;
     $campania->ssid = $ssid;
     $campania->mac_cliente = $mac_cliente;
     $campania->ip_cliente = $ip_cliente;
