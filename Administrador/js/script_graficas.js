@@ -141,7 +141,44 @@ function Personas_Edad(Data){
 }
 
 function Personas_OS(Data){
-
+    var personas_os = $("#personas_os");
+    var Os = [];
+    var Datos = [];
+    for(i = 0; i < Data.length; i++){
+        Os[i] = Data[i]['os'];
+        Datos[i] = [];
+        var color = Math.floor((Math.random() * 255))+","+Math.floor((Math.random() * 255))+","+Math.floor((Math.random() * 255));
+        Datos[i] = {
+            "label": Os[i],
+            "data": [Data[i]['personas']],
+            "backgroundColor": ["rgba("+color+", 1)"],
+            "borderColor": ["rgba("+color+", 1)"],
+            "borderWidth": 1,
+        }
+    }
+    var Personas_Os = new Chart(personas_os, {
+        type: "bar", 
+        data: {
+            labels: ["Sistemas Operativos"], 
+            datasets: Datos
+        },
+        options: {
+            responsive: true,
+            scales: { 
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            legend: {
+                display: true,
+                labels: {
+                    fontSize: 10
+                }
+            }
+        }
+    });
 }
 
 function Personas_Fecha(Data){

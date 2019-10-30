@@ -58,11 +58,11 @@
         }
 
         /* Consulta de las personas por sistema operativo */
-        $handle = $link->prepare('SELECT nombre, COUNT(*) AS personas FROM '.$tabla.' GROUP BY nombre');
+        $handle = $link->prepare('SELECT os, COUNT(*) AS personas FROM '.$tabla.' GROUP BY os');
         $handle->execute();
         $os = $handle->fetchAll(\PDO::FETCH_OBJ);
         foreach ($os as $row) {
-            array_push($eventos[4], array("x" => $row->nombre, "personas" => $row->personas));
+            array_push($eventos[4], array("os" => $row->os, "personas" => $row->personas));
         }
 
         /* Consulta de las personas por fecha*/
