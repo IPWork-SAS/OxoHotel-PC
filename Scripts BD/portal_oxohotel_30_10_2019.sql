@@ -62,7 +62,7 @@ CREATE TABLE `eventos` (
   PRIMARY KEY (`id`),
   KEY `id_locacion` (`id_locacion`),
   CONSTRAINT `id_locacion` FOREIGN KEY (`id_locacion`) REFERENCES `locaciones` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `locaciones` (
   PRIMARY KEY (`id`),
   KEY `id_idx` (`id_ciudad`),
   CONSTRAINT `id` FOREIGN KEY (`id_ciudad`) REFERENCES `ciudades` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +120,7 @@ CREATE TABLE `paises` (
   `iso3` varchar(45) DEFAULT NULL,
   `indicativo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,8 +155,9 @@ CREATE TABLE `publicidad_a_2019_campania` (
   `ip_cliente` varchar(250) DEFAULT NULL,
   `ip_ap` varchar(250) DEFAULT NULL,
   `mac_ap` varchar(250) DEFAULT NULL,
+  `id_pais` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -165,7 +166,7 @@ CREATE TABLE `publicidad_a_2019_campania` (
 
 LOCK TABLES `publicidad_a_2019_campania` WRITE;
 /*!40000 ALTER TABLE `publicidad_a_2019_campania` DISABLE KEYS */;
-INSERT INTO `publicidad_a_2019_campania` VALUES (1,1,'2019-10-24 11:37:31','Juan David pachon Suzunaga','juan.suzunaga@gmail.com','32','3223650805','Mujer', 'Android','Test_R','34e12d43a922','10.165.0.16','10.165.0.8',NULL),(2,1,'2019-10-25 11:56:10','Juan david','juan.suzunaga@email.com','21','3223650805','Hombre', 'Windows', 'oxohotel_1','30074d8595f0','192.168.0.12','192.168.0.23','60d02c2d04f0'),(3,1,'2019-10-50 11:56:57','Soporte','soport@soporte.com','66','2131472580','Hombre', 'MacOS', 'oxohotel_1','d0c5f3c5da5a','192.168.0.14','192.168.0.23','60d02c2d04f0'),(4,1,'2019-10-24 11:57:59','Hola','hoq@gsjd.xon','77','2312536325','Hombre', 'Windows', 'oxohotel_1','d0c5f3c5da5a','192.168.0.14','192.168.0.23','60d02c2d04f0'),(5,1,'2019-10-25 12:00:32','Juan','juan.suzunaga@gmail.com','23','2345678654321','Hombre', 'Windows', 'oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(6,1,'2019-10-24 12:31:33','Hola','ge@gsjd.com','66','3214569807','Mujer', 'Android','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0'),(7,1,'2019-10-30 02:47:20','Gerardo Mendoza','ger@correo.com.co','34','1231234565','Hombre', 'MacOS', 'oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(8,1,'2019-10-24 02:48:16','Gerardp Mendoza','ger@correo.com','32','32222121212','Hombre', 'Windows', 'oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(9,1,'2019-10-31 02:49:16','Gerardo Mendoza','ger@correo.com','35','3445633432','Hombre', 'Windows', 'oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0'),(10,1,'2019-10-24 05:11:39','sdjflsd sdjfsdkjf','sdsds@gmail.com','34','3156726860','Otro','Linux', '','','','',''),(11,1,'2019-10-28 09:24:21','Juan David','juan.suzunaga@gmail.com','30','3223650805','Hombre', 'MacOS', 'oxohotel_1','34e12d43a922','192.168.0.11','192.168.0.13','60d02c2d04f0'),(12,1,'2019-10-28 04:25:30','Juan','juan.suzunaga@gmail.com','23','1234567654321','Mujer', 'Android','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0');
+INSERT INTO `publicidad_a_2019_campania` VALUES (1,1,'2019-10-24 11:37:31','Juan David pachon Suzunaga','juan.suzunaga@gmail.com','32','3223650805','Mujer','Android','Test_R','34e12d43a922','10.165.0.16','10.165.0.8',NULL,NULL),(2,1,'2019-10-25 11:56:10','Juan david','juan.suzunaga@email.com','21','3223650805','Hombre','Windows','oxohotel_1','30074d8595f0','192.168.0.12','192.168.0.23','60d02c2d04f0',NULL),(3,1,'0000-00-00 00:00:00','Soporte','soport@soporte.com','66','2131472580','Hombre','MacOS','oxohotel_1','d0c5f3c5da5a','192.168.0.14','192.168.0.23','60d02c2d04f0',NULL),(4,1,'2019-10-24 11:57:59','Hola','hoq@gsjd.xon','77','2312536325','Hombre','Windows','oxohotel_1','d0c5f3c5da5a','192.168.0.14','192.168.0.23','60d02c2d04f0',NULL),(5,1,'2019-10-25 12:00:32','Juan','juan.suzunaga@gmail.com','23','2345678654321','Hombre','Windows','oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0',NULL),(6,1,'2019-10-24 12:31:33','Hola','ge@gsjd.com','66','3214569807','Mujer','Android','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0',NULL),(7,1,'2019-10-30 02:47:20','Gerardo Mendoza','ger@correo.com.co','34','1231234565','Hombre','MacOS','oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0',NULL),(8,1,'2019-10-24 02:48:16','Gerardp Mendoza','ger@correo.com','32','32222121212','Hombre','Windows','oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0',NULL),(9,1,'2019-10-31 02:49:16','Gerardo Mendoza','ger@correo.com','35','3445633432','Hombre','Windows','oxohotel_1','34e12d43a922','192.168.0.13','192.168.0.23','60d02c2d04f0',NULL),(10,1,'2019-10-24 05:11:39','sdjflsd sdjfsdkjf','sdsds@gmail.com','34','3156726860','Otro','Linux','','','','','',NULL),(11,1,'2019-10-28 09:24:21','Juan David','juan.suzunaga@gmail.com','30','3223650805','Hombre','MacOS','oxohotel_1','34e12d43a922','192.168.0.11','192.168.0.13','60d02c2d04f0',NULL),(12,1,'2019-10-28 04:25:30','Juan','juan.suzunaga@gmail.com','23','1234567654321','Mujer','Android','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0',NULL),(13,1,'2019-10-30 03:17:30','','','','','','','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0',NULL),(14,1,'2019-10-30 03:18:45','','','','','','','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0',NULL),(15,1,'2019-10-30 03:21:34','pedro','pepe@hotmail.com','12','12345234124','Mujer','','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0',NULL),(16,1,'2019-10-30 03:44:32','Juan David','juan.suzunaga@gmail.com','12','123456712345','Hombre','Windows','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0',NULL),(17,1,'2019-10-30 03:53:03','Juan David','juan.suzunaga@gmail.com','12','1234567890\'¿\'0987654','Hombre','Windows','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0','1'),(18,1,'2019-10-30 03:53:28','QWERTY','juan.suzunaga@gmail.com','12','23452345676543','Hombre','Windows','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0','1'),(19,1,'2019-10-30 03:54:08','Juan David','juan.suzunaga@gmail.com','32','12345623452','Hombre','Windows','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0','2'),(20,1,'2019-10-30 03:58:57','Juan David','juan.suzunaga@gmail.com','12','2345|1234567890\'','Hombre','Windows','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0','1'),(21,1,'2019-10-30 04:01:06','Juan David','juan.suzunaga@gmail.com','23','1234567812','Hombre','Windows','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0','1'),(22,1,'2019-10-30 06:32:39','Jorge Eduardo','jpqjp@com','34','3223453456','Hombre','Otro','Test_R','34e12d43a922','10.165.0.16','10.165.0.8','60d02c2d04f0','10');
 /*!40000 ALTER TABLE `publicidad_a_2019_campania` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,7 +213,7 @@ CREATE TABLE `roles_usuarios` (
   `descripcion` varchar(1000) DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,7 +244,7 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`id`),
   KEY `id_rol` (`id_rol`),
   CONSTRAINT `id_rol` FOREIGN KEY (`id_rol`) REFERENCES `roles_usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -413,4 +414,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-30 10:04:46
+-- Dump completed on 2019-10-30 18:33:52
