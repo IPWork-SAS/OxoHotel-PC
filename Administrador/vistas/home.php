@@ -23,18 +23,31 @@ try {
       \PDO::ATTR_PERSISTENT => false
     )
   );
+  /* Consulta el ultimo evento registrado */
+  $handle = $link->prepare("select * from eventos ORDER BY fecha_inicio DESC LIMIT 1");
+  $handle->execute();
+  $resultEvento = $handle->fetchAll(\PDO::FETCH_OBJ);
+  
+  $id_evento = $resultEvento[0]->id;
+  $fecha_inicial = $resultEvento[0]->fecha_inicio;
+  $fecha_final = $resultEvento[0]->fecha_fin;
 
+  /* Pregunta si se ha establecido un filtro de fecha */
   if (isset($_POST['fecha_inicial']) && isset($_POST['fecha_final'])) {
-    $eventosArray = array();
-    $handle = $link->prepare("select * from eventos where fecha_inicio between '" . $_POST["fecha_inicial"] . "' AND '" . $_POST["fecha_final"] . "'");
-    $handle->execute();
-    $resultFilter = $handle->fetchAll(\PDO::FETCH_OBJ);
-
-    foreach ($resultFilter as $row) {
-      array_push($eventosArray, array("nombre" => $row->nombre, "id" => $row->id));
-    }
+    $fecha_inicial = $_POST["fecha_inicial"];
+    $fecha_final = $_POST["fecha_final"];
+    $id_evento = 0;
   }
 
+  /* Se hace la consulta de todos los eventos segun fecha otorgada */
+  $handle = $link->prepare("select * from eventos where fecha_inicio between '" .$fecha_inicial. "' AND '" .$fecha_final. "'");
+  $handle->execute();
+  $resultFilter = $handle->fetchAll(\PDO::FETCH_OBJ);
+
+  foreach ($resultFilter as $row) {
+    array_push($eventosArray, array("nombre" => $row->nombre, "id" => $row->id));
+  }
+  
   $handle = $link->prepare('select count(edad) numPersonas, edad 
                                   from portal_oxohotel.publicidad_a_2019_campania
                                   group by edad
@@ -85,71 +98,8 @@ try {
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
 
-  <script>
-    window.onload = function() {
-
-
-
-      var chart = new CanvasJS.Chart("chartContainer", {
-        animationEnabled: true,
-        exportEnabled: true,
-        theme: "light1", // "light1", "light2", "dark1", "dark2"
-        title: {
-          text: "Numero de Personas por Edad",
-          fontFamily: "tahoma",
-        },
-        zoomEnabled: true,
-        axisX: {
-          title: "Edad",
-          interval: 1
-        },
-        axisY: {
-          title: "Numero Personas"
-        },
-        data: [{
-          type: "column", //change type to bar, line, area, pie, etc  
-          dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-        }]
-      });
-      chart.render();
-
-      CanvasJS.addColorSet("greenShades",
-        [ //colorSet Array
-
-          "#2F4F4F",
-          "#008080",
-          "#2E8B57",
-          "#3CB371",
-          "#90EE90"
-        ]);
-
-
-      var chart1 = new CanvasJS.Chart("chartContainer1", {
-        animationEnabled: true,
-        exportEnabled: true,
-        theme: "light1", // "light1", "light2", "dark1", "dark2"
-        title: {
-          text: "Numero de Personas por Fecha",
-          fontFamily: "tahoma",
-        },
-        zoomEnabled: true,
-        axisX: {
-          title: "Dia",
-          interval: 1
-        },
-        axisY: {
-          title: "Numero Personas",
-          interval: 1
-        },
-        data: [{
-          type: "bar",
-          dataPoints: <?php echo json_encode($dataPoints1, JSON_NUMERIC_CHECK); ?>
-        }]
-      });
-      chart1.render();
-    }
-  </script>
-
+  <!-- Styles for library chart.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
 </head>
 
 <body id="page-top">
@@ -193,14 +143,14 @@ try {
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="index.php">
+        <a class="nav-link">
           <span>Menu</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.php">
+        <a class="nav-link" href="index.php?doc=eventos&id=1">
           <i class="fas fa-fw fa-chart-area"></i>
-          <span>Locaciones</span></a>
+          <span>Eventos</span></a>
       </li>
     </ul>
 
@@ -211,50 +161,9 @@ try {
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">Administrador</a>
+            <a href="index.php">Dashboard</a>
           </li>
-          <li class="breadcrumb-item active">Locaciones</li>
         </ol>
-
-        <!-- DataTables Example -->
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            Lista de locaciones</div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Fecha Creacion</th>
-                    <th>Descripcion</th>
-                    <th>Eventos</th>
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Fecha Creacion</th>
-                    <th>Descripcion</th>
-                    <th>Eventos</th>
-                  </tr>
-                </tfoot>
-                <tbody>
-                  <?php foreach ($locaciones as $row) : ?>
-                    <tr>
-                      <td><?= $row['nombre']; ?></td>
-                      <td><?= $row['fecha_creacion']; ?></td>
-                      <td><?= $row['descripcion']; ?></td>
-                      <td><a href="index.php?doc=<?= $eventos . "&id=" . $row['id']; ?>">Ver</a></td>
-                    </tr>
-                  <?php endforeach; ?>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="card-footer small text-muted">Ultima actualizacion: <?= $locacion->getFechaUltimaEntrada() ?></div>
-        </div>
 
         <!-- Area Chart Example-->
         <div class="card mb-3">
@@ -263,14 +172,14 @@ try {
             Eventos
           </div>
           <div class="card-body">
-          <form action="" method="POST" class="col-lg-12 col-md-12 col-sm-12">
+            <form action="" method="POST" class="col-lg-12 col-md-12 col-sm-12">
               <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 form-group">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <label for="fecha_inicial">Fecha Inicial</label>
                   </div>
                   <div class="col-lg-12 col-md-12 col-sm-12">
-                    <input type="date" class="form-control" id="fecha_inicial" require name="fecha_inicial" value="<?php echo date('Y-m-d'); ?>">
+                    <input type="date" class="form-control" id="fecha_inicial" require name="fecha_inicial" value="<?php echo date('Y-m-d', strtotime ($fecha_inicial)); ?>">
                   </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 form-group">
@@ -278,7 +187,7 @@ try {
                     <label for="fecha_final">Fecha Final</label>
                   </div>
                   <div class="col-lg-12 col-md-12 col-sm-12">
-                    <input type="date" class="form-control" id="fecha_final" require name="fecha_final" value="<?php echo date('Y-m-d'); ?>">
+                    <input type="date" class="form-control" id="fecha_final" require name="fecha_final" value="<?php echo date('Y-m-d', strtotime ($fecha_final)); ?>">
                   </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 form-group" style="padding-top: 30px;">
@@ -295,35 +204,13 @@ try {
                   <select name="evento" id="evento" class="form-control" require>
                     <option value="">Seleccione ...</option>
                     <?php foreach ($eventosArray as $evento) : ?>
-                      <option value="<?php echo $evento['id']; ?>"><?php echo $evento['nombre']; ?></option>
+                      <option value="<?php echo $evento['id']; ?>" <?php echo $id_evento == $evento['id'] ? 'selected' : ''?>><?php echo $evento['nombre']; ?></option>
                     <?php endforeach; ?>
                   </select>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="card mb-3">
-                  <div class="card-header">
-                    <i class="fas fa-chart-bar"></i>
-                    Numero de Personas por Edad</div>
-                  <div class="card-body">
-                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-                  </div>
-                  <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="card mb-3">
-                  <div class="card-header">
-                    <i class="fas fa-chart-pie"></i>
-                    Numero de Personas por Dia</div>
-                  <div class="card-body">
-                    <div id="chartContainer1" style="height: 390px; width: 100%;"></div>
-                  </div>
-                  <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-                </div>
-              </div>
+            <div class="row" id="graficas">
             </div>
           </div>
           <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
@@ -389,7 +276,16 @@ try {
   <!-- Demo scripts for this page-->
   <script src="js/demo/datatables-demo.js"></script>
   <script src="js/demo/chart-area-demo.js"></script>
-  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  <script src="js/script_graficas.js"></script>
+  <!-- <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+  <script>
+      $(document).ready(function(){
+        <?php if($id_evento <> 0):?>
+          ConsultaGraficas(<?php echo $id_evento;?>);
+        <?php endif;?>
+		  });
+  </script>
 </body>
 
 </html>
