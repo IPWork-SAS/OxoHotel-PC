@@ -1,6 +1,6 @@
-<?php
-    include '../config.php';
-    include 'orm.class.php';
+<?php 
+    include_once('config.php') ;
+    include_once('orm.class.php');
 
     $params = BD_PARAMETERS;
 

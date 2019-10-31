@@ -81,9 +81,9 @@
                                     <option selected value=""><?= $lang['indicativo_form'];?></option>
                                     <?php 
                                         foreach ($paises as $pais) {
-                                            if( $lang["lang"] = 'es') {
+                                            if( $lang["lang"] == 'es') {
                                                 echo '<option value="'.$pais->id.'">'.$pais->nombre_esp.' (+'.$pais->indicativo.')</option>';
-                                            } else if ($lang['lang'] = 'en') {
+                                            } else if ($lang['lang'] == 'en') {
                                                 echo '<option value="'.$pais->id.'">'.$pais->nombre_en.' (+'.$pais->indicativo.')</option>';
                                             } else {
                                                 echo '<option value="'.$pais->id.'">'.$pais->nombre_esp.' (+'.$pais->indicativo.')</option>';
