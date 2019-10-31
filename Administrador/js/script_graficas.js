@@ -1,14 +1,18 @@
-$('#evento').on('change', function() {
-    if(this.value !== ''){
-        ConsultaGraficas(this.value);
+function CambioEnvento(fecha_inicial, hora_inicial, fecha_final, hora_final){
+    var id = $("#evento").val();
+    if(id !== ''){
+        ConsultaGraficas(id, fecha_inicial, hora_inicial, fecha_final, hora_final);
     }
-});
+}
 
-function ConsultaGraficas(id){
+function ConsultaGraficas(id, fecha_inicial, hora_inicial, fecha_final, hora_final){
+    var fechaInicial = fecha_inicial+hora_inicial+":00";
+    var fechaFinal = fecha_final+hora_final+":00";
+    var data = {"id" : id, "fecha_inicial" : fechaInicial, "fecha_final": fechaFinal};
     $.ajax({
-        url: "includes/consulta_graficas.php?id="+id,
-        type: "GET",
-        data:{},
+        url: "includes/consulta_graficas.php",
+        type: "POST",
+        data: data,
         beforeSend: function(){
             $("#graficas").empty();
         },

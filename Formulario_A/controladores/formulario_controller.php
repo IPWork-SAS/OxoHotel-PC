@@ -33,7 +33,6 @@
     $campania->mac_ap = $mac_ap;
     $campania->ip_ap = $ip_ap;
 
-
     $campania->save();
 
     //construimos la url de habilitacion de internet

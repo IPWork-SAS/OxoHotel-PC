@@ -29,18 +29,23 @@ try {
   $resultEvento = $handle->fetchAll(\PDO::FETCH_OBJ);
   
   $id_evento = $resultEvento[0]->id;
-  $fecha_inicial = $resultEvento[0]->fecha_inicio;
-  $fecha_final = $resultEvento[0]->fecha_fin;
+  $fecha_inicial = date('Y-m-d', strtotime ($resultEvento[0]->fecha_inicio));
+  $hora_inicial = date('h:i', strtotime ($resultEvento[0]->fecha_inicio));
+  $fecha_final = date('Y-m-d', strtotime ($resultEvento[0]->fecha_fin));
+  $hora_final = date('h:i', strtotime ($resultEvento[0]->fecha_fin));
+  
 
   /* Pregunta si se ha establecido un filtro de fecha */
-  if (isset($_POST['fecha_inicial']) && isset($_POST['fecha_final'])) {
+  if (isset($_POST['fecha_inicial']) && isset($_POST['fecha_final']) && isset($_POST['hora_inicial']) && isset($_POST['hora_final'])) {
     $fecha_inicial = $_POST["fecha_inicial"];
+    $hora_inicial = $_POST['hora_inicial'];
     $fecha_final = $_POST["fecha_final"];
+    $hora_final = $_POST['hora_final'];
     $id_evento = 0;
   }
 
   /* Se hace la consulta de todos los eventos segun fecha otorgada */
-  $handle = $link->prepare("select * from eventos where fecha_inicio between '" .$fecha_inicial. "' AND '" .$fecha_final. "'");
+  $handle = $link->prepare("select * from eventos where fecha_inicio between '" .$fecha_inicial." ".$hora_inicial. "' AND '" .$fecha_final." ".$hora_final. "'");
   $handle->execute();
   $resultFilter = $handle->fetchAll(\PDO::FETCH_OBJ);
 
@@ -174,23 +179,33 @@ try {
           <div class="card-body">
             <form action="" method="POST" class="col-lg-12 col-md-12 col-sm-12">
               <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-12 form-group">
+                <div class="col-lg-5 col-md-5 col-sm-12 form-group">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <label for="fecha_inicial">Fecha Inicial</label>
                   </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12">
-                    <input type="date" class="form-control" id="fecha_inicial" require name="fecha_inicial" value="<?php echo date('Y-m-d', strtotime ($fecha_inicial)); ?>">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <input type="date" class="form-control" id="fecha_inicial" require name="fecha_inicial" value="<?php echo $fecha_inicial; ?>">
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <input type="time" class="form-control" id="hora_inicial" require name="hora_inicial" value="<?php echo $hora_inicial; ?>">
+                    </div>
                   </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 form-group">
+                <div class="col-lg-5 col-md-5 col-sm-12 form-group">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <label for="fecha_final">Fecha Final</label>
                   </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12">
-                    <input type="date" class="form-control" id="fecha_final" require name="fecha_final" value="<?php echo date('Y-m-d', strtotime ($fecha_final)); ?>">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <input type="date" class="form-control" id="fecha_final" require name="fecha_final" value="<?php echo $fecha_final; ?>">
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <input type="time" class="form-control" id="hora_final" require name="hora_final" value="<?php echo $hora_final; ?>">
+                    </div>
                   </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 form-group" style="padding-top: 30px;">
+                <div class="col-lg-2 col-md-2 col-sm-12 form-group" style="padding-top: 30px;">
                   <input type="submit" class="btn btn-primary" value="Filtrar">
                 </div>
               </div>
@@ -201,7 +216,7 @@ try {
                   <label for="evento">Evento</label>
                 </div>
                 <div class="col-md-12 col-lg-12 col-sm-12">
-                  <select name="evento" id="evento" class="form-control" require>
+                  <select name="evento" id="evento" class="form-control" require onchange="CambioEnvento('<?php echo $fecha_inicial;?>', '<?php echo $hora_inicial;?>', '<?php echo $fecha_final;?>', '<?php echo $hora_final;?>');">
                     <option value="">Seleccione ...</option>
                     <?php foreach ($eventosArray as $evento) : ?>
                       <option value="<?php echo $evento['id']; ?>" <?php echo $id_evento == $evento['id'] ? 'selected' : ''?>><?php echo $evento['nombre']; ?></option>
@@ -282,7 +297,7 @@ try {
   <script>
       $(document).ready(function(){
         <?php if($id_evento <> 0):?>
-          ConsultaGraficas(<?php echo $id_evento;?>);
+          ConsultaGraficas(<?php echo $id_evento;?>, '<?php echo $fecha_inicial;?>', '<?php echo $hora_inicial;?>', '<?php echo $fecha_final;?>', '<?php echo $hora_final;?>');
         <?php endif;?>
 		  });
   </script>

@@ -19,22 +19,24 @@
     $eventos[3] = array();
     $eventos[4] = array();
     $eventos[5] = array();
-    if(isset($_GET['id']) && $_GET['id'] <> null){
+    if(isset($_POST['id']) && $_POST['id'] <> null){
+        $fecha_inicial = date('Y-m-d h:i:s', strtotime ($_POST['fecha_inicial']));
+        $fecha_final = date('Y-m-d h:i:s', strtotime ($_POST['fecha_final']));
         /* Consulta de la tabla del evento */
-        $handle = $link->prepare("select campania from eventos where id = ".$_GET['id']);
+        $handle = $link->prepare("select campania from eventos where id = ".$_POST['id']);
         $handle->execute();
         $tabla = $handle->fetchAll(\PDO::FETCH_OBJ);
         $tabla = $tabla[0]->campania;
 
         /* Consulta de las personas por género */
-        $handle = $link->prepare('SELECT genero, COUNT(*) AS personas FROM '.$tabla.' GROUP BY genero');
+        $handle = $link->prepare('SELECT genero, COUNT(*) AS personas FROM '.$tabla.' WHERE fecha_creacion BETWEEN "'. $fecha_inicial .'" AND "'. $fecha_final .'" GROUP BY genero');
         $handle->execute();
         $genero = $handle->fetchAll(\PDO::FETCH_OBJ);
         foreach ($genero as $row) {
             array_push($eventos[0], array("genero" => $row->genero, "personas" => $row->personas));
         } 
         /* Consulta de las personas por ap */
-        $handle = $link->prepare('SELECT ip_ap, COUNT(*) AS personas FROM '.$tabla.' WHERE date(fecha_creacion) BETWEEN	"2019-10-23" AND "2019-10-31" GROUP BY ip_ap');
+        $handle = $link->prepare('SELECT ip_ap, COUNT(*) AS personas FROM '.$tabla.' WHERE fecha_creacion BETWEEN "'. $fecha_inicial .'" AND "'. $fecha_final .'" GROUP BY ip_ap');
         $handle->execute();
         $ap = $handle->fetchAll(\PDO::FETCH_OBJ);
         foreach ($ap as $row) {
@@ -42,7 +44,7 @@
         }
         
         /* Consulta de las personas por páis */
-        $handle = $link->prepare('SELECT nombre, COUNT(*) AS personas FROM '.$tabla.' GROUP BY nombre');
+        $handle = $link->prepare('SELECT nombre, COUNT(*) AS personas FROM '.$tabla.' WHERE fecha_creacion BETWEEN "'. $fecha_inicial .'" AND "'. $fecha_final .'" GROUP BY nombre');
         $handle->execute();
         $pais = $handle->fetchAll(\PDO::FETCH_OBJ);
         foreach ($pais as $row) {
@@ -50,7 +52,7 @@
         }
 
         /* Consulta de las personas por edad */
-        $handle = $link->prepare('SELECT edad, COUNT(*) AS personas FROM '.$tabla.' GROUP BY edad');
+        $handle = $link->prepare('SELECT edad, COUNT(*) AS personas FROM '.$tabla.' WHERE fecha_creacion BETWEEN "'. $fecha_inicial .'" AND "'. $fecha_final .'" GROUP BY edad');
         $handle->execute();
         $edad = $handle->fetchAll(\PDO::FETCH_OBJ);
         foreach ($edad as $row) {
@@ -58,7 +60,7 @@
         }
 
         /* Consulta de las personas por sistema operativo */
-        $handle = $link->prepare('SELECT os, COUNT(*) AS personas FROM '.$tabla.' GROUP BY os');
+        $handle = $link->prepare('SELECT os, COUNT(*) AS personas FROM '.$tabla.' WHERE fecha_creacion BETWEEN "'. $fecha_inicial .'" AND "'. $fecha_final .'" GROUP BY os');
         $handle->execute();
         $os = $handle->fetchAll(\PDO::FETCH_OBJ);
         foreach ($os as $row) {
@@ -66,7 +68,7 @@
         }
 
         /* Consulta de las personas por fecha*/
-        $handle = $link->prepare('SELECT date(fecha_creacion) as fecha, COUNT(*) AS personas FROM publicidad_a_2019_campania GROUP BY date(fecha_creacion)');
+        $handle = $link->prepare('SELECT date(fecha_creacion) as fecha, COUNT(*) AS personas FROM publicidad_a_2019_campania WHERE fecha_creacion BETWEEN "'. $fecha_inicial .'" AND "'. $fecha_final .'" GROUP BY date(fecha_creacion)');
         $handle->execute();
         $fecha = $handle->fetchAll(\PDO::FETCH_OBJ);
         foreach ($fecha as $row) {
