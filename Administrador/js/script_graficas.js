@@ -271,7 +271,7 @@ function Graficas(Data){
     Personas_Fecha(Data[5]);
 }
 
-var html_Graficas = `<div class="col-lg-6 col-md-6 col-sm-12">
+var html_Graficas = `<div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card mb-3">
                             <div class="card-header">
                                 <i class="fas fa-chart-bar"></i>
@@ -283,7 +283,7 @@ var html_Graficas = `<div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="card-footer small text-muted">Chart.js</div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card mb-3">
                             <div class="card-header">
                                 <i class="fas fa-chart-bar"></i>
@@ -295,7 +295,7 @@ var html_Graficas = `<div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="card-footer small text-muted">Chart.js</div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card mb-3">
                             <div class="card-header">
                                 <i class="fas fa-chart-bar"></i>
@@ -307,7 +307,7 @@ var html_Graficas = `<div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="card-footer small text-muted">Chart.js</div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card mb-3">
                             <div class="card-header">
                                 <i class="fas fa-chart-bar"></i>
@@ -319,7 +319,7 @@ var html_Graficas = `<div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="card-footer small text-muted">Chart.js</div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card mb-3">
                             <div class="card-header">
                                 <i class="fas fa-chart-bar"></i>
@@ -331,7 +331,7 @@ var html_Graficas = `<div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="card-footer small text-muted">Chart.js</div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card mb-3">
                             <div class="card-header">
                                 <i class="fas fa-chart-bar"></i>
