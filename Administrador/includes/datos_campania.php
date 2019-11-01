@@ -2,8 +2,12 @@
     include 'db.php';    
     class DatosCampania extends DB{
 
-        public function getDatosCampania($nombre_campania, $id_evento) {
-            $sql = "SELECT * FROM " . $nombre_campania . " WHERE id_evento = ".$id_evento;
+        public function getDatosCampania($nombre_campania, $id_evento, $columnas, $fecha_inicial, $fecha_final) {
+            $sql = "SELECT ". $columnas ." FROM " . $nombre_campania . " WHERE id_evento = ".$id_evento;
+            // if($fecha_inicial <> '' && $fecha_final <> ''){
+
+            // }
+            // return $sql;
             $query = $this->connect()->prepare($sql);  
             $query->execute();          
             return $query; 

@@ -6,11 +6,35 @@
     $nombre_campania = $_GET['nc'];
   
     $campania = new DatosCampania();
-    $campanias = $campania->getDatosCampania($nombre_campania, $id_evento);
+    $columnasSeleccionadas = "*";
+    $fecha_inicial = "";
+    $fecha_final = "";
     $columnasCampania = $campania->getCamposTabla($nombre_campania);
-
+    $columnasTabla = $campania->getCamposTabla($nombre_campania);
+    
     $utilities = new Utilities();
     
+    if(isset($_POST['submitFiltro'])){
+        $columnas = array();
+        $columnasSeleccionadas = "";
+        $fecha_inicial = $_POST['fecha_inicial']." ".$_POST['hora_inicial'].":00";
+        $fecha_final = $_POST['fecha_final']." ".$_POST['hora_final'].":00";
+        for($i=0; $i < count($columnasCampania); $i++){
+            $columnas[$i] = $columnasCampania[$i];
+        }
+
+        $columnasCampania = array();
+        for($i=2; $i < count($columnas); $i++){
+            if(isset($_POST[$columnas[$i]]) && $_POST[$columnas[$i]] == 'on'){
+                $columnasCampania[$i] = $columnas[$i];
+                $columnasSeleccionadas .= $columnas[$i].", ";
+            }
+        }
+        $columnasSeleccionadas =  substr($columnasSeleccionadas, 0 , -2);
+    }
+    $campanias = $campania->getDatosCampania($nombre_campania, $id_evento, $columnasSeleccionadas, $fecha_inicial, $fecha_final);
+    // echo $campanias;
+    // exit;
 ?>
 
 
@@ -99,7 +123,68 @@
           </li>
           <li class="breadcrumb-item active">Datos de la Campaña</li>
         </ol>
-
+        <div class="card mb-3">
+          <div class="card-header-boton">
+            <div class="enunciado_tabla">
+                <i class="fas fa-filter"></i>
+                Filtro
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <form action="" method="POST" class="col-lg-12 col-md-12 col-sm-12" id="filtro">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <label for="fecha_inicial">Fecha Inicial</label>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                          <input type="date" class="form-control" id="fecha_inicial" required name="fecha_inicial" value="">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                          <input type="time" class="form-control" id="hora_inicial" required name="hora_inicial" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <label for="fecha_final">Fecha Final</label>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                          <input type="date" class="form-control" id="fecha_final" required name="fecha_final" value="">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                          <input type="time" class="form-control" id="hora_final" required name="hora_final" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                        <?php for($i = 0; $i < count($columnasTabla); $i++):?>
+                            <?php if($columnasTabla[$i] != 'id' && $columnasTabla[$i] != 'id_evento'): ?>
+                            <?php $columnaUtilities = $utilities->getCorrectNameFromColumn($columnasTabla[$i]);?> 
+                            <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="col-lg-12 col-md-12-col-sm-12">
+                                    <label for=""><?php echo $columnaUtilities;?></label>
+                                </div>
+                                <div class="col-lg-12 col-md-12-col-sm-12">
+                                    <input type="checkbox" name="<?php echo $columnasTabla[$i];?>" <?php if (isset($columnasCampania[$i])){if($columnasTabla[$i] == $columnasCampania[$i]){echo 'checked';}}; ?>>
+                                </div>
+                            </div>
+                            <?php endif;?>
+                        <?php endfor;?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 form-group offset-md-5 offset-lg-5" style="padding-top: 30px;">
+                      <input type="submit" form="filtro" name="submitFiltro" class="btn btn-primary" value="Filtrar">
+                    </div>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
         <!-- DataTables Example -->
         <div class="card mb-3">
           <div class="card-header-boton">

@@ -44,11 +44,11 @@
         }
         
         /* Consulta de las personas por páis */
-        $handle = $link->prepare('SELECT nombre, COUNT(*) AS personas FROM '.$tabla.' WHERE fecha_creacion BETWEEN "'. $fecha_inicial .'" AND "'. $fecha_final .'" GROUP BY nombre');
+        $handle = $link->prepare('SELECT paises.nombre_esp, pac.id_pais, COUNT(*) AS personas FROM '.$tabla.' AS pac INNER JOIN paises ON pac.id_pais = paises.id WHERE pac.fecha_creacion BETWEEN "'. $fecha_inicial .'" AND "'. $fecha_final .'" GROUP BY pac.id_pais, paises.nombre_esp');
         $handle->execute();
         $pais = $handle->fetchAll(\PDO::FETCH_OBJ);
         foreach ($pais as $row) {
-            array_push($eventos[2], array("x" => $row->nombre, "personas" => $row->personas));
+            array_push($eventos[2], array("nombre_esp" => $row->nombre_esp, "personas" => $row->personas));
         }
 
         /* Consulta de las personas por edad */

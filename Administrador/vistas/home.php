@@ -185,10 +185,10 @@ try {
                   </div>
                   <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12">
-                      <input type="date" class="form-control" id="fecha_inicial" require name="fecha_inicial" value="<?php echo $fecha_inicial; ?>">
+                      <input type="date" class="form-control" id="fecha_inicial" required name="fecha_inicial" value="<?php echo $fecha_inicial; ?>">
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12">
-                      <input type="time" class="form-control" id="hora_inicial" require name="hora_inicial" value="<?php echo $hora_inicial; ?>">
+                      <input type="time" class="form-control" id="hora_inicial" required name="hora_inicial" value="<?php echo $hora_inicial; ?>">
                     </div>
                   </div>
                 </div>
@@ -198,10 +198,10 @@ try {
                   </div>
                   <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12">
-                      <input type="date" class="form-control" id="fecha_final" require name="fecha_final" value="<?php echo $fecha_final; ?>">
+                      <input type="date" class="form-control" id="fecha_final" required name="fecha_final" value="<?php echo $fecha_final; ?>">
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12">
-                      <input type="time" class="form-control" id="hora_final" require name="hora_final" value="<?php echo $hora_final; ?>">
+                      <input type="time" class="form-control" id="hora_final" required name="hora_final" value="<?php echo $hora_final; ?>">
                     </div>
                   </div>
                 </div>

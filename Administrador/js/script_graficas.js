@@ -105,7 +105,39 @@ function Personas_Ap(Data){
 }
 
 function Personas_Pais(Data){
-
+    var personas_pais = $("#personas_pais");
+    var Pais = [];
+    var Datos = [];
+    var BackgroundColor = [];
+    for(i = 0; i < Data.length; i++){
+        Datos[i] = [];
+        BackgroundColor[i] = [];
+        Pais[i] = Data[i]['nombre_esp'];
+        var color = Math.floor((Math.random() * 255))+","+Math.floor((Math.random() * 255))+","+Math.floor((Math.random() * 255));
+        Datos[i] = Data[i]['personas'];
+        BackgroundColor[i] = "rgba("+color+", 1)";
+    }
+    var Personas_Pais = new Chart(personas_pais, {
+        type: "polarArea", 
+        data: {
+            labels: Pais, 
+            datasets: [{
+                data: Datos,
+                backgroundColor: BackgroundColor,
+                borderColor: BackgroundColor,
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: true,
+                labels: {
+                    fontSize: 10
+                }
+            }
+        }
+    });
 }
 
 function Personas_Edad(Data){

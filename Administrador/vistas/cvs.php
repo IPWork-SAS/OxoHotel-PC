@@ -1,7 +1,6 @@
 <?php
     include_once 'includes/datos_campania.php';
     include_once 'includes/cvs.class.php';
-    include_once 'includes/datos_campania.php';
 
     $id_evento = $_GET['id'];
     $nombre_campania = $_GET['nc'];
