@@ -37,9 +37,9 @@
         
         $userForm = $_POST['username'];
         $passForm = $_POST['password'];
-        if (condition) {
-            # code...
-        }
+        // if (condition) {
+        //     # code...
+        // }
         $usuario = new Usuario();
         if($usuario->userExists($userForm, $passForm)){
             if($usuario->validateUserLicence($userForm)) {

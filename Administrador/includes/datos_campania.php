@@ -3,11 +3,7 @@
     class DatosCampania extends DB{
 
         public function getDatosCampania($nombre_campania, $id_evento, $columnas, $fecha_inicial, $fecha_final) {
-            $sql = "SELECT ". $columnas ." FROM " . $nombre_campania . " WHERE id_evento = ".$id_evento;
-            // if($fecha_inicial <> '' && $fecha_final <> ''){
-
-            // }
-            // return $sql;
+            $sql = "SELECT ". $columnas ." FROM " . $nombre_campania . " WHERE id_evento = ".$id_evento." AND fecha_creacion BETWEEN '". $fecha_inicial . "' AND '". $fecha_final ."'";
             $query = $this->connect()->prepare($sql);  
             $query->execute();          
             return $query; 
@@ -44,8 +40,8 @@
             return $array;          
         }
 
-        public function getDatosCampaniaArray($nombre_campania, $id_evento) {
-            $sql = "SELECT * FROM " . $nombre_campania . " WHERE id_evento = ".$id_evento;
+        public function getDatosCampaniaArray($nombre_campania, $id_evento, $columnas, $fecha_inicial, $fecha_final) {
+            $sql = "SELECT ". $columnas ." FROM " . $nombre_campania . " WHERE id_evento = ".$id_evento." AND fecha_creacion BETWEEN '". $fecha_inicial . "' AND '". $fecha_final ."'";
             $query = $this->connect()->query($sql)->fetchAll();            
             return $query;    
         }

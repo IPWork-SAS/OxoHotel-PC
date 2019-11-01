@@ -12,7 +12,8 @@ class DB {
         $this->host     = 'localhost';
         $this->db       = 'portal_oxohotel';
         $this->user     = 'root';
-        $this->password = "IPwork2019.";
+        // $this->password = "IPwork2019.";
+        $this->password = "";
         $this->charset  = 'utf8mb4';
     }
 

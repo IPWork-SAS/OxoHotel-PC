@@ -4,21 +4,38 @@
 
     $id_evento = $_GET['id'];
     $nombre_campania = $_GET['nc'];
+    date_default_timezone_set('America/Bogota');
   
     $campania = new DatosCampania();
-    $columnasSeleccionadas = "*";
-    $fecha_inicial = "";
-    $fecha_final = "";
+    
+    $fecha_inicial = date('Y-m-d');
+    $hora_inicial = "00:00";
+    $fecha_final = date('Y-m-d');
+    $hora_final = date('H:i');
+    $fecha_inicial_total = $fecha_inicial." ".$hora_inicial.":00";
+    $fecha_final_total = $fecha_final." ".$hora_final.":00";
+
     $columnasCampania = $campania->getCamposTabla($nombre_campania);
     $columnasTabla = $campania->getCamposTabla($nombre_campania);
+    $columnasSeleccionadas = "";
+
+    for($i=2; $i < count($columnasCampania); $i++){
+        $columnasSeleccionadas .= $columnasCampania[$i].", ";
+    }
     
     $utilities = new Utilities();
     
     if(isset($_POST['submitFiltro'])){
         $columnas = array();
         $columnasSeleccionadas = "";
-        $fecha_inicial = $_POST['fecha_inicial']." ".$_POST['hora_inicial'].":00";
-        $fecha_final = $_POST['fecha_final']." ".$_POST['hora_final'].":00";
+
+        $fecha_inicial = $_POST['fecha_inicial'];
+        $hora_inicial = $_POST['hora_inicial'];
+        $fecha_final = $_POST['fecha_final'];
+        $hora_final = $_POST['hora_final'];
+        $fecha_inicial_total = $fecha_inicial." ".$hora_inicial.":00";
+        $fecha_final_total = $fecha_final." ".$hora_final.":00";
+
         for($i=0; $i < count($columnasCampania); $i++){
             $columnas[$i] = $columnasCampania[$i];
         }
@@ -30,11 +47,9 @@
                 $columnasSeleccionadas .= $columnas[$i].", ";
             }
         }
-        $columnasSeleccionadas =  substr($columnasSeleccionadas, 0 , -2);
     }
-    $campanias = $campania->getDatosCampania($nombre_campania, $id_evento, $columnasSeleccionadas, $fecha_inicial, $fecha_final);
-    // echo $campanias;
-    // exit;
+    $columnasSeleccionadas =  substr($columnasSeleccionadas, 0 , -2);
+    $campanias = $campania->getDatosCampania($nombre_campania, $id_evento, $columnasSeleccionadas, $fecha_inicial_total, $fecha_final_total);
 ?>
 
 
@@ -140,10 +155,10 @@
                       </div>
                       <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                          <input type="date" class="form-control" id="fecha_inicial" required name="fecha_inicial" value="">
+                          <input type="date" class="form-control" id="fecha_inicial" required name="fecha_inicial" value="<?php echo $fecha_inicial;?>">
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                          <input type="time" class="form-control" id="hora_inicial" required name="hora_inicial" value="">
+                          <input type="time" class="form-control" id="hora_inicial" required name="hora_inicial" value="<?php echo $hora_inicial;?>">
                         </div>
                       </div>
                     </div>
@@ -153,15 +168,19 @@
                       </div>
                       <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                          <input type="date" class="form-control" id="fecha_final" required name="fecha_final" value="">
+                          <input type="date" class="form-control" id="fecha_final" required name="fecha_final" value="<?php echo $fecha_final;?>">
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                          <input type="time" class="form-control" id="hora_final" required name="hora_final" value="">
+                          <input type="time" class="form-control" id="hora_final" required name="hora_final" value="<?php echo $hora_final;?>">
                         </div>
                       </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="row">
+                        <a class="btn btn-primary offset-md-5 offset-lg-5" id="btn_columns" role="button" onclick="ShowColumn();">
+                            <i class="fas fa-columns"></i>
+                            Ver Coulumnas
+                        </a>
+                        <div class="row" id="div_columns" style="overflow: hidden; height: 60px;">
                         <?php for($i = 0; $i < count($columnasTabla); $i++):?>
                             <?php if($columnasTabla[$i] != 'id' && $columnasTabla[$i] != 'id_evento'): ?>
                             <?php $columnaUtilities = $utilities->getCorrectNameFromColumn($columnasTabla[$i]);?> 
@@ -193,7 +212,7 @@
                     Lista de los datos de la campaña
                 </div>
                 <div class="button-card-header">
-                    <a class="btn btn-primary" href="index.php?doc=cvs&id=<?=$id_evento."&nc=".$nombre_campania?>">Descargar CVS</a>
+                    <a class="btn btn-primary" href="index.php?doc=cvs&id=<?=$id_evento."&nc=".$nombre_campania."&col_sel=".$columnasSeleccionadas."&fecha_inicial=".$fecha_inicial_total."&fecha_final=".$fecha_final_total?>">Descargar CVS</a>
                 </div>                
             </div>
           <div class="card-body">
@@ -300,7 +319,27 @@
   <!-- Demo scripts for this page-->
   <script src="js/demo/datatables-demo.js"></script>
   <script src="js/demo/chart-area-demo.js"></script>
-
+  <script>
+    //   $(document).ready(function(){
+        function ShowColumn(){
+            $("#btn_columns").empty();
+            if($("#div_columns").css('height') == '60px'){
+                $("#btn_columns").append(`
+                    <i class="fas fa-columns"></i>
+                    Ocultar Coulumnas
+                `);
+                $("#div_columns").css('height', 'initial');
+            }
+            else{
+                $("#btn_columns").append(`
+                    <i class="fas fa-columns"></i>
+                    Ver Coulumnas
+                `);
+                $("#div_columns").css('height', '60px')
+            }
+        }
+    //   });
+  </script>
 </body>
 
 </html>
