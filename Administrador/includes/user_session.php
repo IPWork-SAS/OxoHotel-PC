@@ -8,6 +8,7 @@ class UserSession{
 
     public function setCurrentUser($user){
         $_SESSION['user'] = $user;
+        $_SESSION['last_time'] = time();
     }
 
     public function getCurrentUser(){
@@ -15,6 +16,7 @@ class UserSession{
     }
 
     public function closeSession(){
+        session_regenerate_id(true);  
         session_unset();
         session_destroy();
     }

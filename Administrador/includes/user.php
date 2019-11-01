@@ -32,6 +32,32 @@ class User extends DB{
     public function getNombre(){
         return $this->nombre;
     }
+
+    public function validateUserLicence($user) {            
+        $query = $this->connect()->prepare('SELECT* from usuarios a inner join licencias_usuario b on a.id = b.id_usuario
+        where a.username = :user and :today between b.fecha_inicial and fecha_final;');  
+
+        $query->execute(['user' => $user, 'today' => $this->getDatetimeNow()]);
+
+        if($query->rowCount()){
+            return true;
+        }else{
+            return false;
+        }        
+    }
+
+    public function test() {
+        return $this->nombre;
+    }
+
+    function getDatetimeNow() {
+        $tz_object = new DateTimeZone('America/Bogota');
+        //date_default_timezone_set('Brazil/East');
+    
+        $datetime = new DateTime();
+        $datetime->setTimezone($tz_object);
+        return $datetime->format('Y\-m\-d\ h:i:s');
+    }
 }
 
 ?>

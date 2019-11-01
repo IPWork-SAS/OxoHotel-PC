@@ -32,7 +32,7 @@
                         <input type="password" name="password" placeholder="Contraseña" autocomplete="off" required> 
                     </div>
                     <div class="field-button">
-                        <input type="submit" value="Iniciar Sesión">    
+                        <input type="submit" name="submit" value="Iniciar Sesión">    
                     </div>
                 </form>
             </div>

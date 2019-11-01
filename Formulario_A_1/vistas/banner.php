@@ -1,7 +1,12 @@
 <?php
     session_start();
-    $lang = $_SESSION["i"];
+    if (isset($_SESSION['i'])) {
+        $lang = $_SESSION["i"];
+    } else {
+        $lang = 'es';
+    }   
     include_once("../lang/{$lang}.php"); 
+    
     $username = 'prueba';
     $password = 'prueba';
     $port = '9998';

@@ -1,9 +1,10 @@
 <?php 
     //Se llaman las librerias y clases necesarias
-    require_once("../db/campania.class.php");
+    include_once "../db/campania.class.php";
 
     //Datos de que suministra el AP
     session_start();
+    
     $ip_ap = isset($_SESSION['ip_ap']) ? trim($_SESSION['ip_ap']) : "";  
     $mac_ap = isset($_SESSION['mac_ap']) ? trim($_SESSION['mac_ap']) : "";  
     $mac_cliente = isset($_SESSION['mac_cliente']) ? trim($_SESSION['mac_cliente']) : "";  
